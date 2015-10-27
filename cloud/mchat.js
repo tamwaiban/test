@@ -23,7 +23,7 @@ function getPushMessage(params) {
     ,"_profile": "dev"      //设置证书，开发时用 dev，生产环境不设置
   };
   var msg = JSON.parse(contentStr);
-  json.alert =contentStr;
+  json.alert = 'hello';
   /*if (msg._lcattrs && msg._lcattrs.username) {
       if (type == msgTypeText) {
         json.alert = msg._lcattrs.username + ' : ' + msg._lctext;
