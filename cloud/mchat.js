@@ -20,7 +20,7 @@ function getPushMessage(params) {
     badge: "Increment",
     sound: "default",
     convid: params.convId     //来支持点击弹框，跳转至相应对话
-//    ,"_profile": "dev"      //设置证书，开发时用 dev，生产环境不设置
+    ,"_profile": "dev"      //设置证书，开发时用 dev，生产环境不设置
   };
   var msg = JSON.parse(contentStr);
   var msgDesc = getMsgDesc(msg);
