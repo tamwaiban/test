@@ -23,7 +23,8 @@ function getPushMessage(params) {
     ,"_profile": "dev"      //设置证书，开发时用 dev，生产环境不设置
   };
   var msg = JSON.parse(contentStr);
-  if (msg._lcattrs && msg._lcattrs.username) {
+  json.alert =contentStr;
+  /*if (msg._lcattrs && msg._lcattrs.username) {
       if (type == msgTypeText) {
         json.alert = msg._lcattrs.username + ' : ' + msg._lctext;
       } else if (type == msgTypeImage) {
@@ -42,7 +43,7 @@ function getPushMessage(params) {
       
   } else {
       json.alert = msg._lctext;
-  }
+  }*/
   if (msg._lcattrs && msg._lcattrs.dev) {
     json._profile = "dev";
   }
