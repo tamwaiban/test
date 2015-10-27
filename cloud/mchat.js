@@ -6,8 +6,8 @@ var mutil = require('cloud/mutil');
 var msgTypeText = -1;
 var msgTypeImage = -2;
 var msgTypeAudio = -3;
-var msgTypeVideo = -4;
-var msgTypeLocation = -5;
+var msgTypeSticker = -4;
+var msgTypeTule = -5;
 var msgTypeEmotion = 1;
 
 function messageReceived(req, res) {
@@ -23,35 +23,30 @@ function getPushMessage(params) {
     ,"_profile": "dev"      //设置证书，开发时用 dev，生产环境不设置
   };
   var msg = JSON.parse(contentStr);
-  var msgDesc = getMsgDesc(msg);
   if (msg._lcattrs && msg._lcattrs.username) {
-      json.alert = msg._lcattrs.username + ' : ' + msgDesc;
+      if (type == msgTypeText) {
+        json.alert = msg._lcattrs.username + ' : ' + msg._lctext;
+      } else if (type == msgTypeImage) {
+        json.alert = msg._lcattrs.username + ' 发来一张图片 ';
+      } else if (type == msgTypeAudio) {
+        json.alert = msg._lcattrs.username + ' 发来一段语音 ';
+      } else if (type == msgTypeEmotion) {
+        json.alert = msg._lcattrs.username + ' 发来一个表情 ';
+      } else if (type == msgTypeSticker){
+        json.alert = msg._lcattrs.username + ' 分享了一张贴纸给你 ';
+      } else if (type == msgTypeTule){
+        json.alert = msg._lcattrs.username + ' 分享了一张图片给你 ';
+      } else {
+        json.alert = '你收到了一条消息';
+      }
+      
   } else {
-      json.alert = msgDesc;
+      json.alert = msg._lctext;
   }
   if (msg._lcattrs && msg._lcattrs.dev) {
     json._profile = "dev";
   }
   return JSON.stringify(json);
-}
-
-function getMsgDesc(msg) {
-  var type = msg._lctype;
-  if (type == msgTypeText) {
-    return msg._lctext;
-  } else if (type == msgTypeImage) {
-    return "图片";
-  } else if (type == msgTypeAudio) {
-    return "声音";
-  } else if (type == msgTypeLocation) {
-    return msg._lctext;
-  } else if (type == msgTypeEmotion){
-    return "动态表情";
-  } else if (type == msgTypeVideo) {
-    return "视频";
-  } else {
-    return "未知消息";
-  }
 }
 
 function receiversOffline(req, res) {
