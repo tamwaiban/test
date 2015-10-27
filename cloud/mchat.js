@@ -6,9 +6,9 @@ var mutil = require('cloud/mutil');
 var msgTypeText = -1;
 var msgTypeImage = -2;
 var msgTypeAudio = -3;
-var msgTypeSticker = -4;
-var msgTypeTule = -5;
 var msgTypeEmotion = 1;
+var msgTypeSticker = 2;
+var msgTypeTule = 3;
 
 function messageReceived(req, res) {
   res.success();
@@ -23,8 +23,7 @@ function getPushMessage(params) {
     ,"_profile": "dev"      //设置证书，开发时用 dev，生产环境不设置
   };
   var msg = JSON.parse(contentStr);
-  json.alert = 'hello';
-  /*if (msg._lcattrs && msg._lcattrs.username) {
+  if (msg._lcattrs && msg._lcattrs.username) {
       if (type == msgTypeText) {
         json.alert = msg._lcattrs.username + ' : ' + msg._lctext;
       } else if (type == msgTypeImage) {
@@ -43,7 +42,7 @@ function getPushMessage(params) {
       
   } else {
       json.alert = msg._lctext;
-  }*/
+  }
   if (msg._lcattrs && msg._lcattrs.dev) {
     json._profile = "dev";
   }
